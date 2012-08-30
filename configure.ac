@@ -33,6 +33,22 @@ AC_SUBST(host_os)
 
 VERSION="$PACKAGE_VERSION"
 
+
+AC_ARG_VAR([DYLIB_LDFLAGS],
+                      [special flags used for make a dynamic library])
+
+case "${host_os}" in
+  darwin*)
+    DYLIB_LDFLAGS="-dynamiclib -Wl,-headerpad_max_install_names,-undefined,dynamic_lookup"
+  ;;
+  *)
+    DYLIB_LDFLAGS="-shared"
+  ;;
+esac
+
+
+
+
 dnl **********************
 dnl * Programs
 dnl **********************
@@ -83,6 +99,8 @@ AC_C_CONST
 AC_C_VOLATILE
 AC_TYPE_SIZE_T
 AC_TYPE_SIGNAL
+AC_TYPE_SSIZE_T
+AC_DEFINE([error_t], [int],[Define to a type to use for error_t if it is not otherwise available.])
 
 dnl **********************
 dnl * Library functions
@@ -116,7 +134,7 @@ AC_SUBST(PCRE_LIBS)
 AC_MSG_RESULT(found)
 
 AC_MSG_CHECKING(for suboptarg)
-AC_RUN_IFELSE(AC_LANG_PROGRAM(
+AC_RUN_IFELSE([AC_LANG_SOURCE(
 [[#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -129,7 +147,7 @@ extern char *suboptarg;
 
   getsubopt (&subopts, empty_subopts, &value);
   exit (!suboptarg);]]), [have_suboptarg="yes"],
-[have_suboptarg="no"], [have_suboptarg="no"])
+[have_suboptarg="no"], [have_suboptarg="no"]])
 AC_MSG_RESULT(${have_suboptarg})
 case ${have_suboptarg} in
 	yes)
@@ -152,6 +170,11 @@ AC_ARG_WITH(builtins,
 			S_PLUGINS="$(echo $withval | sed 's/,/ /g')";;
 	   esac], [S_PLUGINS=""])
 AC_SUBST(S_PLUGINS)
+
+
+
+AC_SUBST(DYLIB_LDFLAGS)
+
 
 dnl **********************
 dnl * Output

@@ -41,7 +41,7 @@ SH_PLUGINS	= $(filter-out ${S_PLUGINS},${ALL_PLUGINS})
 PLUGIN_SHOBJS	= $(addsuffix .so,${SH_PLUGINS})
 PLUGIN_SOBJS	= $(addsuffix .o,$(addprefix mod_,${S_PLUGINS}))
 PLUGIN_OBJS	= ${PLUGIN_SHOBJS} ${PLUGIN_SOBJS}
-CLEANFILES	= ccze-dump ccze-cssdump
+CLEANFILES	= ccze-dump ccze-cssdump *.dSYM
 DISTCLEANFILES	= ccze-builtins.c
 OBJECTS		= ccze.o ccze-color.o ccze-plugin.o ccze-wordcolor.o \
 		ccze-builtins.o ccze-compat.o
@@ -97,7 +97,7 @@ endif
 %.o: %.c ccze.h
 	${CC} -c ${CPPFLAGS} ${ALL_CFLAGS} $<
 %.so: mod_%.c ccze.h
-	${CC} -fPIC -DPIC ${ALL_CFLAGS} ${ALL_LDFLAGS} -o $@ $< -shared
+	${CC} -fPIC -DPIC ${ALL_CFLAGS} ${ALL_LDFLAGS} -o $@ $< @DYLIB_LDFLAGS@
 
 ## -- Dependencies -- ##
 ccze.o: ccze.c ${top_builddir}/system.h ccze.h ccze-private.h \

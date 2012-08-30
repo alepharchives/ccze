@@ -20,6 +20,7 @@ man7dir		= ${mandir}/man7
 libdir		= @libdir@
 includedir	= @includedir@
 pkglibdir	= ${libdir}/${PACKAGE}
+datadir 	= @datarootdir@
 
 CC		= @CC@
 CFLAGS		= @CFLAGS@

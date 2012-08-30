@@ -37,7 +37,7 @@ distclean:: clean
 	${MAKE} -C doc $@
 	${MAKE} -C src $@
 	${MAKE} -C testsuite $@
-	rm -rf config.cache config.status config.log \
+	rm -rf configure.scan autoscan.log config.cache config.status config.log \
 	       autom4te.cache system.h Makefile Rules.mk *~
 
 maintainer-clean:: distclean
