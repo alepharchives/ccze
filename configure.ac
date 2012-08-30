@@ -100,7 +100,7 @@ AC_C_VOLATILE
 AC_TYPE_SIZE_T
 AC_TYPE_SIGNAL
 AC_TYPE_SSIZE_T
-AC_DEFINE([error_t], [int],[Define to a type to use for error_t if it is not otherwise available.])
+AC_CHECK_TYPES([error_t],[] ,[],[[#include <errno.h>]])
 
 dnl **********************
 dnl * Library functions

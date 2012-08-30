@@ -49,6 +49,10 @@ int
 asprintf(char **ptr, const char *fmt, ...);
 #endif
 
+#ifndef HAVE_ERROR_T
+typedef int error_t;
+#endif
+
 #ifndef HAVE_ARGP_PARSE
 struct argp_option
 {
